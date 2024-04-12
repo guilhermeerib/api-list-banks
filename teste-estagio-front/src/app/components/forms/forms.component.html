@@ -1,0 +1,30 @@
+<input type="number" name="id" [(ngModel)]="searchId">
+<button (click)="findById()">Filtrar Código de compensação</button>
+<button (click)="findAll()">Buscar Todos</button>
+
+<!-- como Eu vou passar os dados para essa tabela mds -->
+<table *ngIf="_exibir_banco">
+  <thead>
+    <tr>
+      <th>Indice </th>
+      <th>Código de Compensação</th>
+      <th>Nome do Banco</th>
+    </tr>
+
+  </thead>
+  <tbody *ngIf="_lista_bancos !=null ">
+    <tr *ngFor="let banco of _lista_bancos;let i = index">
+      <td>{{i+1}}</td>
+      <td>{{ banco.id }}</td>
+      <td>{{ banco.nome }}</td>
+    </tr>
+  <tbody *ngIf="_banco_selecionado !=null">
+    <tr>
+      <td>1</td>
+      <td>{{ _banco_selecionado.id }}</td>
+      <td>{{ _banco_selecionado.nome }}</td>
+    </tr>
+  </tbody>
+
+</table>
+
