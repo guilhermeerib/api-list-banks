@@ -1,6 +1,15 @@
-<!-- <input type="number" name="id" [(ngModel)]="searchId">
-<button (click)="findById()">Filtrar Código de compensação</button>
-<button (click)="findAll()">Buscar Todos</button> -->
+<form class="form-group">
 
+  <div class="div-container">
 
+    <div class="input-id">
+      <label for="">Filtrar Código de Compensação: </label>
+      <input type="number" min="0" placeholder="Código de Compensação" name="id" [(ngModel)]="findId" required="" />
+    </div>
 
+    <button (click)="findByIdBanco()" mat-flat-button color="primary">Buscar Código</button>
+    <button (click)="findAllBancos()" mat-flat-button color="primary">Buscar Todos</button>
+
+  </div>
+
+</form>

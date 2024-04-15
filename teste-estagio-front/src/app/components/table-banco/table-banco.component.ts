@@ -3,19 +3,21 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { BancoService } from '../../services/banco.service'; // Importe o serviço bancoService
 
-import { Banco } from '../../models/Banco';
-import { Observable,of } from 'rxjs';
+import { Banco } from '../../models/banco.model';
+import { Observable, of } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-table-banco',
   standalone: true,
-  imports: [MatTableModule, MatPaginatorModule],
+  imports: [MatTableModule, MatPaginatorModule, CommonModule],
   templateUrl: './table-banco.component.html',
   styleUrl: './table-banco.component.scss'
 })
 
 export class TableBancoComponent implements AfterViewInit, OnInit {
-  displayedColumns: string[] = ['id', 'nome'];
+  showTable = true
+  displayedColumns: string[] = ['index', 'id', 'nome'];
   dataSource = new MatTableDataSource<Banco>();
   bancos$: Observable<Banco[]> = of([]);
   @ViewChild(MatPaginator) paginator!: MatPaginator;

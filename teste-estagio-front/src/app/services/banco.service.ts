@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { Banco } from '../models/Banco';
-import axios from 'axios';
+import { Banco } from '../models/banco.model';
+import axios, { AxiosError } from 'axios';
+import { ErrorDialogService } from './error-dialog.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BancoService {
   private bancosSubject = new BehaviorSubject<Banco[]>([]);
   bancos$: Observable<Banco[]> = this.bancosSubject.asObservable();
-  constructor() { }
+  constructor(private errorDialogService: ErrorDialogService) {}
 
   //Getters e Setters
   setBancos(bancos: Banco[]) {
@@ -21,33 +22,52 @@ export class BancoService {
   }
 
   // Metodos do servico
-  // bancoService
-  async buscarTodos() {
+  async findAll() {
     try {
       const resposta = await axios.get('http://localhost:8080/banco/todos');
-      const bancos: Banco[] = resposta.data
-      this.setBancos(bancos)
-      console.log(bancos)
+      const _bancos: Banco[] = resposta.data;
+      if (_bancos != null && _bancos.length > 0) {
+        this.setBancos(_bancos);
+      } else {
+        this.errorDialogService.openDialog(`Nenhum Banco foi encontrado.`);
+      }
     } catch (error) {
-      console.error('Erro na requisição:', error);
-
+      if ((error as AxiosError).code === 'ECONNREFUSED') {
+        console.error('Erro de conexão: O servidor recusou a conexão.');
+      } else {
+        this.errorDialogService.openDialog(`Ocorreu um erro desconhecido`);
+        console.error('Erro:', error);
+      }
     }
   }
+
   async findById(id: number) {
-    console.log("chamdo service by id");
-
     try {
-      const resposta = await axios.get(`http://localhost:8080/banco/${id}`)
-      const _banco =  resposta.data
-      this.setBancos([_banco])
+      const resposta = await axios.get(`http://localhost:8080/banco/${id}`);
+      const _banco = resposta.data;
+      this.setBancos([_banco]);
     } catch (error) {
-      alert(`Erro na requisição: ${error}`);
-
+      const statusCode =
+        (error as AxiosError).response && (error as AxiosError).response?.status
+          ? (error as AxiosError).response?.status
+          : 'desconhecido';
+      if (
+        (error as AxiosError).response &&
+        (error as AxiosError).response?.status === 404
+      ) {
+        this.errorDialogService.openDialog(
+          `O Banco com Código de Compensação "${id}" não foi encontrado.`
+        );
+        console.error('Recurso não encontrado:', error);
+      } else if ((error as AxiosError).code === 'ECONNREFUSED') {
+        console.error('Erro de conexão: O servidor recusou a conexão.');
+        this.errorDialogService.openDialog(
+          `Não foi possível conectar ao servidor. O servidor recusou a conexão ou está desligado execução.`
+        );
+      } else {
+        console.error('Erro:', error);
+        this.errorDialogService.openDialog(`Ocorreu um erro "${statusCode}".`);
+      }
     }
   }
-
-
-
-
-
 }
