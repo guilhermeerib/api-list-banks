@@ -34,22 +34,14 @@ public class BancoController {
             Banco banco = bancoService.findByIdBanco(idBanco);
             return ResponseEntity.ok().body(banco);
         } catch (EntityNotFoundException e) {
+            e.printStackTrace();
             return ResponseEntity.notFound().build();
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().build();
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
 
 
 

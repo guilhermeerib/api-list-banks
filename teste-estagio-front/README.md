@@ -1,27 +1,44 @@
-# TesteEstagioFront
+# Aplicação WEB
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.4.
+Este projeto foi gerado com [Angular CLI](https://github.com/angular/angular-cli) versão 17.3.4. e Nodejs 20
 
-## Development server
+## Funcionalidades
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Esta é a aplicação front-end responsável por renderizar a tela, fazer comunicação com a API e disponibilizar os dados visualmente no navegador.
 
-## Code scaffolding
+Possui duas funções:
+Dizponibilizar os dados de todos os Bancos salvos no SGBD MYSQL, ou filtrar os dados de um único banco usando seu código de compensação como parâmetro.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Pré- requisitos
 
-## Build
+- Node.js instalado no seu sistema. Você pode baixá-lo em [nodejs.org](https://nodejs.org/)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Passos
 
-## Running unit tests
+ Abra um terminal
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+1. Clone o repositório
 
-## Running end-to-end tests
+    `git clone https://github.com/guilhermeerib/teste_estagio_revgas.git`
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+2. Navegue até o diretório do projeto:
 
-## Further help
+    `cd teste_estagio_revgas/teste-estagio-front`
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+3. Instale as dependências do projeto:
+
+    `npm install`
+
+4. Execute ng serve para iniciar um servidor de desenvolvimento.
+
+    `ng serve`
+
+5. Navegue até http://localhost:4200/ em seu navegador.
+
+## Servidor de desenvolvimento
+
+Execute `ng serve` para um servidor de desenvolvimento. Navegue até `http://localhost:4200/`. O aplicativo será recarregado automaticamente se você alterar algum dos arquivos de origem.
+
+## Construir
+
+Execute `ng build` para construir o projeto. Os artefatos de construção serão armazenados no diretório `dist/`.
