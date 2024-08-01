@@ -1,19 +1,14 @@
-FROM node:20 AS build
-
-# install simple http server for serving static content
-RUN npm install -g http-server
-
+FROM node:20 AS builder
 WORKDIR /app
-
-COPY package*.json .
-
+COPY . .
+RUN npm install
 RUN npm run build
 
-COPY . .
-# RUN npm run build --prod
-EXPOSE 4200
-CMD [ "http-server", "dist" ]
-# FROM nginx:alpine
-# COPY --from=build /app/dist /usr/share/nginx/html
-# COPY nginx.conf /etc/nginx/conf.d/default.conf
-# CMD ["nginx", "-g", "daemon off;"]
+FROM nginx:alpine
+COPY --from=builder app/dist/teste-estagio-front/browser /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY mime.types /etc/nginx/mime.types
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+
+
